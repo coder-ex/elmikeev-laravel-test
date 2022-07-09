@@ -1,0 +1,109 @@
+version: "3.5"
+
+services:
+  php:
+    build: ./docker/php-fpm
+    container_name: php-fpm
+    image: elmikeev/php-fpm
+    depends_on:
+      - postgres
+    volumes:
+      - ${PATH_HOST}/project:${PATH_CONTAINER}
+      - ${PATH_HOST}/logs/xdebug:/var/log/xdebug
+    working_dir: ${PATH_CONTAINER}
+    environment:
+      XDEBUG_CONFIG: "client_host=192.168.222.1 start_with_request=no client_port=9008"
+      XDEBUG_SESSION: "PHPVCS"
+      PHP_IDE_CONFIG: "serverName=school-server"
+    ports:
+      - "25:25"
+      - "587:587"
+#      - "2525:2525" # данный порт используется в том случае, если интернет провайдер фильтрует порт 25
+    networks:
+      - app_net
+
+  nginx:
+    build:
+      context: docker/nginx
+    image: elmikeev/http-nginx
+    container_name: http-nginx
+    depends_on:
+      - php
+    volumes:
+      - ${PATH_HOST}/project:${PATH_CONTAINER}
+      - ${PATH_HOST}/logs/nginx:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      app_net:
+        aliases:
+          - school.loc
+
+  postgres:
+    build:
+      context: ./docker/postgres
+    image: elmikeev/pg-db
+    container_name: pg-db
+    restart: always
+    environment:
+      POSTGRES_HOST: ${DB_CONNECT}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: ${DB_MOUNT}
+      LANG: "ru_RU.UTF-8"
+      LANGUAGE: "ru_RU.UTF-8"
+      LC_ALL: "ru_RU.UTF-8"
+      POSTGRES_INITDB_ARGS: "-EUTF-8"
+    volumes:
+      #- pg_data:${DB_MOUNT}
+      - ${PATH_HOST}/pg/data:/var/lib/postgresql/data
+      - ${PATH_HOST}/pg/conf:/etc/postgresql
+      - ${PATH_HOST}/logs/pg:/var/log/postgresql
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '3.0'
+    networks:
+      #- app_net
+      app_net:
+        ipv4_address: 192.168.222.4
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:6.4
+    #image: elmikeev/pgadmin4:6.4
+    depends_on:
+      - nginx
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${DB_USER}@school.loc
+      PGADMIN_DEFAULT_PASSWORD: ${DB_PASS}
+    ports:
+      - "8080:80"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      - app_net
+
+volumes:
+  pg_data:
+  nodejs:
+    driver: local
+  postgres:
+    driver: local
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.222.0/28

@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "9fcb30c6-5445-41be-9050-edf8263102ca",
+		"name": "ТЗ по ИП Ельмикеев (data-sfera)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "получение токена",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\": \"def502003ef9e30c81b45ceea19f0c622a7e227720332b5dd9034e3f59ea626fa6135d6e342190ba65ce1a0a5f35300aba5c914283e26bd331206fe4074834ce74d81e0265ae4a505abaf838a9eafcb34db59413b7e285e3a40de52d1fdfdcdf2c4ce1587cc3c1d84dcf474ee945968fb01b9cd50af664b1b9a9ca839027d76271ea2dd9283b0fff9df7696a2cf5104cca32f7ef495c83c79f9261c593980b3510690b55dd580abd9dce2db17f286541e5b9ce91227a4ecf25a791e72ede3ba095aaa5c87d50b2e2cea6c82ae764a2dad8f7bd6cadd55b34372c5fface1dbe46a9b2a7d3a859a5436b2451651e77f81ddc41c3b6d1d90dc39d237e0410c32fce4ea728bdf4b67e09658af14d3069e4114a34b5a118a50afee0125ad56f4189bf7192a237d74257a24db59b396834638b58fe55bb5bb1c051273bc36147a4fba7f10323e66a93fb0c8e3cd0e11618eb9456d1a6ea8f1b94f840132b3a9dccedb3f9b9b9ebf6171dfd70ba0c3f8d9bc52231d0bb8e87a8b0d3d2117064a010e6422e2a863ea9076671f3c723e678bf1696d9c72ce29e174b3804a965870085471ddeffa33c072396ca40c2b3ae03456ddd36a570d0e4c62386a86991644004bdc3deab1067b6367abd663d9e15e306c66ad8e26b156a9c3a5989\",\n    \"client_id\": \"3917eb62-f1e8-49f3-805f-60b0282f4721\",\n    \"referer\": \"coderex.amocrm.ru\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://school.loc/api/credentials",
+					"protocol": "http",
+					"host": [
+						"school",
+						"loc"
+					],
+					"path": [
+						"api",
+						"credentials"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получение всех сделок",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://school.loc/api/lead-get-info",
+					"protocol": "http",
+					"host": [
+						"school",
+						"loc"
+					],
+					"path": [
+						"api",
+						"lead-get-info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "добавление сделок по названию",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"сделка по ТЗ 1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://school.loc/api/lead-set-one",
+					"protocol": "http",
+					"host": [
+						"school",
+						"loc"
+					],
+					"path": [
+						"api",
+						"lead-set-one"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "обновление полей ( B = A + C )",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"lead_id\": \"238367\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://school.loc/api/lead-up-one",
+					"protocol": "http",
+					"host": [
+						"school",
+						"loc"
+					],
+					"path": [
+						"api",
+						"lead-up-one"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

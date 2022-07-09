@@ -1,0 +1,30 @@
+###> General for docker container ###
+/.idea/
+/.git/
+/source/pg/
+/source/logs/
+/source/redis/
+/source/project/.vscode/
+/source/project/client/
+/src-tmp/
+/doc/*
+!/doc/howto-docker
+!/doc/phpinfo.php
+!/doc/xdebug.php
+
+###> END General for docker container ###
+
+###> Node JS client ###
+/source/project/client/node_modules/
+###> END Node JS client ###
+
+###> laravel/laravel server ###
+/source/project/server/public/hot
+/source/project/server/public/storage
+/source/project/server/storage/*.key
+/source/project/server/storage/logs/*.log
+/source/project/server/vendor
+/source/project/server/.env.backup
+/source/project/server/.phpunit.result.cache
+/source/project/server/yarn-error.log
+###> END laravel/laravel server ###
